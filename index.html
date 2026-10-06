@@ -1,329 +1,369 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  Cloud, Sparkles, Cpu, MonitorPlay, ShieldCheck, Search, 
-  ChevronDown, SearchX, BarChart2, Clock, Star 
-} from 'lucide-react';
+<!DOCTYPE html>
+<html lang="kk" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloudnet - Инновациялық Білім Кеңістігі</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        darkBg: '#05050a',
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-[#05050a] text-slate-200 selection:bg-cyan-500/30 overflow-x-hidden relative min-h-screen font-sans">
 
-const initialCourses = [
-  {
-    id: 1,
-    title: "Python Негіздері: Практика + Жобалар",
-    category: "Programming",
-    level: "Beginner",
-    duration: "24 сағ",
-    rating: 4.8,
-    price: "29,990 ₸",
-    image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 2,
-    title: "UI/UX Design: Figma & Case Study",
-    category: "Design",
-    level: "Beginner",
-    duration: "30 сағ",
-    rating: 4.7,
-    price: "39,990 ₸",
-    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 3,
-    title: "Machine Learning: Scikit-learn Практикум",
-    category: "AI",
-    level: "Intermediate",
-    duration: "42 сағ",
-    rating: 4.9,
-    price: "69,990 ₸",
-    image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 4,
-    title: "Full-Stack Web: HTML/CSS/JS + API",
-    category: "Web",
-    level: "Intermediate",
-    duration: "38 сағ",
-    rating: 4.6,
-    price: "49,990 ₸",
-    image: "https://images.unsplash.com/photo-1627398240309-089a14426d82?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 5,
-    title: "Advanced SQL: JOIN & Window Functions",
-    category: "AI",
-    level: "Advanced",
-    duration: "28 сағ",
-    rating: 4.8,
-    price: "58,990 ₸",
-    image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 6,
-    title: "Cloud Architecture & AWS Essentials",
-    category: "Cloud",
-    level: "Advanced",
-    duration: "45 сағ",
-    rating: 4.9,
-    price: "79,990 ₸",
-    image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 7,
-    title: "Cybersecurity: Ethical Hacking негіздері",
-    category: "Cloud",
-    level: "Intermediate",
-    duration: "35 сағ",
-    rating: 4.7,
-    price: "54,990 ₸",
-    image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 8,
-    title: "DevOps Engineering & Docker/Kubernetes",
-    category: "Cloud",
-    level: "Advanced",
-    duration: "40 сағ",
-    rating: 4.8,
-    price: "64,990 ₸",
-    image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 9,
-    title: "Blockchain & Smart Contracts Development",
-    category: "Programming",
-    level: "Beginner",
-    duration: "20 сағ",
-    rating: 4.5,
-    price: "34,990 ₸",
-    image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80"
-  },
-  {
-    id: 10,
-    title: "Data Science & Python Pandas Analytics",
-    category: "AI",
-    level: "Intermediate",
-    duration: "50 сағ",
-    rating: 4.9,
-    price: "74,990 ₸",
-    image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=600&q=80"
-  }
-];
+    <!-- Background glow effects -->
+    <div class="fixed inset-0 pointer-events-none z-0">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-600/10 blur-[120px]"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]"></div>
+    </div>
 
-export default function App() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
-  const [selectedLevel, setSelectedLevel] = useState('all');
-  const [notification, setNotification] = useState('');
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed top-24 right-6 z-50 bg-cyan-500/20 border border-cyan-500 text-cyan-300 px-5 py-3 rounded-2xl backdrop-blur-md shadow-2xl hidden transition-all duration-300">
+        <span id="toast-text"></span>
+    </div>
 
-  const filteredCourses = initialCourses.filter(course => {
-    const matchesSearch = course.title.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === 'all' || course.category === selectedCategory;
-    const matchesLevel = selectedLevel === 'all' || course.level === selectedLevel;
-    return matchesSearch && matchesCategory && matchesLevel;
-  });
+    <div class="relative z-10">
+        <!-- Navigation Bar -->
+        <nav class="sticky top-0 w-full z-50 bg-[#0a0a16]/80 backdrop-blur-xl border-b border-white/5">
+            <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+                <div class="flex items-center gap-3 cursor-pointer group">
+                    <div class="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] transition-all duration-300">
+                        <i data-lucide="cloud" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <span class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide">
+                        Cloudnet
+                    </span>
+                </div>
+                
+                <div class="hidden md:flex items-center gap-8 text-sm font-medium">
+                    <a href="#" class="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Басты бет</a>
+                    <a href="#courses" class="text-slate-400 hover:text-slate-200 transition-colors">Курстар</a>
+                    <a href="#" class="text-slate-400 hover:text-slate-200 transition-colors">Платформа</a>
+                    <a href="#" class="text-slate-400 hover:text-slate-200 transition-colors">Байланыс</a>
+                </div>
 
-  const handleEnroll = (title) => {
-    setNotification(`"${title}" курсқа сәтті өтінім жіберілді!`);
-    setTimeout(() => setNotification(''), 4000);
-  };
-
-  return (
-    <div className="bg-[#05050a] text-slate-200 selection:bg-cyan-500/30 overflow-x-hidden relative min-h-screen font-sans">
-      
-      {/* Background glow effects */}
-      <div className="fixed inset-0 pointer-events-none z-0">
-        <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-600/10 blur-[120px]"></div>
-        <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-purple-600/10 blur-[120px]"></div>
-        <div className="absolute top-[40%] left-[50%] translate-x-[-50%] w-[60%] h-[20%] rounded-full bg-blue-600/5 blur-[100px]"></div>
-      </div>
-
-      {notification && (
-        <div className="fixed top-24 right-6 z-50 bg-cyan-500/20 border border-cyan-500 text-cyan-300 px-5 py-3 rounded-2xl backdrop-blur-md shadow-2xl animate-bounce">
-          {notification}
-        </div>
-      )}
-
-      <div className="relative z-10">
-        {/* Navigation Bar */}
-        <nav className="sticky top-0 w-full z-50 bg-[#0a0a16]/80 backdrop-blur-xl border-b border-white/5">
-          <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-            <div className="flex items-center gap-3 cursor-pointer group">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-blue-600 group-hover:shadow-[0_0_20px_rgba(6,182,212,0.5)] transition-all duration-300">
-                <Cloud className="w-6 h-6 text-white" />
-              </div>
-              <span className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 to-purple-400 tracking-wide">
-                Cloudnet
-              </span>
+                <button class="hidden md:block px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 transition-all text-sm font-medium text-white hover:shadow-[0_0_15px_rgba(6,182,212,0.3)] cursor-pointer">
+                    Кіру
+                </button>
             </div>
-            
-            <div className="hidden md:flex items-center gap-8 text-sm font-medium">
-              <a href="#" className="text-cyan-400 drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">Басты бет</a>
-              <a href="#courses" className="text-slate-400 hover:text-slate-200 transition-colors">Курстар</a>
-              <a href="#" className="text-slate-400 hover:text-slate-200 transition-colors">Платформа</a>
-              <a href="#" className="text-slate-400 hover:text-slate-200 transition-colors">Байланыс</a>
-            </div>
-
-            <button className="hidden md:block px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 border border-white/10 hover:border-cyan-500/50 transition-all text-sm font-medium text-white hover:shadow-[0_0_15px_rgba(6,182,212,0.3)]">
-              Кіру
-            </button>
-          </div>
         </nav>
 
-        {/* Header Hero Section */}
-        <header className="relative pt-20 pb-12 md:pt-28 md:pb-16 px-6 overflow-hidden">
-          <div className="max-w-7xl mx-auto flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm mb-6 animate-pulse">
-              <Sparkles className="w-4 h-4" />
-              <span>AI-негізделген оқыту жүйесі</span>
-            </div>
-            
-            <h1 className="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
-              Cloudnet: <span className="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">Инновациялық</span> Білім Кеңістігі
-            </h1>
-            
-            <p className="text-base md:text-lg text-slate-400 max-w-2xl mb-10">
-              Заманауи IT бағыттары бойынша тереңдетілген 10 авторлық курс, интерактивті тапсырмалар және AI көмекшісі.
-            </p>
+        <!-- Header Hero Section -->
+        <header class="relative pt-20 pb-12 md:pt-28 md:pb-16 px-6">
+            <div class="max-w-7xl mx-auto flex flex-col items-center text-center">
+                <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-cyan-500/10 border border-cyan-500/20 text-cyan-400 text-sm mb-6 animate-pulse">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>AI-негізделген оқыту жүйесі</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-6">
+                    Cloudnet: <span class="bg-clip-text text-transparent bg-gradient-to-r from-cyan-400 via-blue-500 to-purple-500">Инновациялық</span> Білім Кеңістігі
+                </h1>
+                
+                <p class="text-base md:text-lg text-slate-400 max-w-2xl mb-10">
+                    Заманауи IT бағыттары бойынша тереңдетілген 10 авторлық курс, интерактивті тапсырмалар және AI көмекшісі.
+                </p>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl text-left">
-              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:border-purple-500/30 transition-colors">
-                <Cpu className="w-7 h-7 text-purple-400 mb-3" />
-                <h3 className="text-white font-semibold mb-1">AI Дербестендіру</h3>
-                <p className="text-xs text-slate-500">Сіздің қабілетіңізге сай бейімделген жол картасы.</p>
-              </div>
-              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
-                <MonitorPlay className="w-7 h-7 text-cyan-400 mb-3" />
-                <h3 className="text-white font-semibold mb-1">10 Премиум Курс</h3>
-                <p className="text-xs text-slate-500">Новичоктен Senior деңгейіне дейінгі толық практика.</p>
-              </div>
-              <div className="p-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:border-blue-500/30 transition-colors">
-                <ShieldCheck className="w-7 h-7 text-blue-400 mb-3" />
-                <h3 className="text-white font-semibold mb-1">Сертификат</h3>
-                <p className="text-xs text-slate-500">Халықаралық стандартқа сай ресми сертификат алу.</p>
-              </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-4xl text-left">
+                    <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:border-purple-500/30 transition-colors">
+                        <i data-lucide="cpu" class="w-7 h-7 text-purple-400 mb-3"></i>
+                        <h3 class="text-white font-semibold mb-1">AI Дербестендіру</h3>
+                        <p class="text-xs text-slate-500">Сіздің қабілетіңізге сай бейімделген жол картасы.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:border-cyan-500/30 transition-colors">
+                        <i data-lucide="monitor-play" class="w-7 h-7 text-cyan-400 mb-3"></i>
+                        <h3 class="text-white font-semibold mb-1">10 Премиум Курс</h3>
+                        <p class="text-xs text-slate-500">Новичоктен Senior деңгейіне дейінгі толық практика.</p>
+                    </div>
+                    <div class="p-5 rounded-2xl bg-white/[0.02] border border-white/5 backdrop-blur-sm hover:border-blue-500/30 transition-colors">
+                        <i data-lucide="shield-check" class="w-7 h-7 text-blue-400 mb-3"></i>
+                        <h3 class="text-white font-semibold mb-1">Сертификат</h3>
+                        <p class="text-xs text-slate-500">Халықаралық стандартқа сай ресми сертификат алу.</p>
+                    </div>
+                </div>
             </div>
-          </div>
         </header>
 
-        {/* Filters and Search Section */}
-        <section className="px-6 py-6" id="courses">
-          <div className="max-w-7xl mx-auto">
-            <div className="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col md:flex-row gap-4 items-center">
-              
-              <div className="relative w-full md:flex-1">
-                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400" />
-                <input 
-                  type="text" 
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Курс атауы бойынша іздеу (Мысалы: Python, AI, Web)..." 
-                  className="w-full pl-12 pr-4 py-3 bg-black/20 border border-white/5 rounded-xl focus:outline-none focus:border-cyan-500/50 text-white placeholder-slate-500 transition-all text-sm"
-                />
-              </div>
+        <!-- Filters and Search Section -->
+        <section class="px-6 py-6" id="courses">
+            <div class="max-w-7xl mx-auto">
+                <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 backdrop-blur-md flex flex-col md:flex-row gap-4 items-center">
+                    
+                    <div class="relative w-full md:flex-1">
+                        <i data-lucide="search" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400"></i>
+                        <input 
+                            type="text" 
+                            id="searchInput"
+                            placeholder="Курс атауы бойынша іздеу (Мысалы: Python, AI, Web)..." 
+                            class="w-full pl-12 pr-4 py-3 bg-black/20 border border-white/5 rounded-xl focus:outline-none focus:border-cyan-500/50 text-white placeholder-slate-500 transition-all text-sm"
+                        />
+                    </div>
 
-              <div className="flex w-full md:w-auto gap-4">
-                <div className="relative flex-1 md:w-48">
-                  <select 
-                    value={selectedCategory}
-                    onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full appearance-none px-4 py-3 bg-black/20 border border-white/5 rounded-xl text-slate-300 focus:outline-none focus:border-purple-500/50 transition-all cursor-pointer text-sm"
-                  >
-                    <option value="all" className="bg-[#0a0a16]">Барлық бағыттар</option>
-                    <option value="Programming" className="bg-[#0a0a16]">Programming</option>
-                    <option value="Design" className="bg-[#0a0a16]">Design</option>
-                    <option value="AI" className="bg-[#0a0a16]">AI & Data</option>
-                    <option value="Web" className="bg-[#0a0a16]">Web Dev</option>
-                    <option value="Cloud" className="bg-[#0a0a16]">Cloud & DevOps</option>
-                  </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
+                    <div class="flex w-full md:w-auto gap-4">
+                        <div class="relative flex-1 md:w-48">
+                            <select 
+                                id="categoryFilter"
+                                class="w-full appearance-none px-4 py-3 bg-black/20 border border-white/5 rounded-xl text-slate-300 focus:outline-none focus:border-purple-500/50 transition-all cursor-pointer text-sm"
+                            >
+                                <option value="all" class="bg-[#0a0a16]">Барлық бағыттар</option>
+                                <option value="Programming" class="bg-[#0a0a16]">Programming</option>
+                                <option value="Design" class="bg-[#0a0a16]">Design</option>
+                                <option value="AI" class="bg-[#0a0a16]">AI & Data</option>
+                                <option value="Web" class="bg-[#0a0a16]">Web Dev</option>
+                                <option value="Cloud" class="bg-[#0a0a16]">Cloud & DevOps</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"></i>
+                        </div>
+
+                        <div class="relative flex-1 md:w-48">
+                            <select 
+                                id="levelFilter"
+                                class="w-full appearance-none px-4 py-3 bg-black/20 border border-white/5 rounded-xl text-slate-300 focus:outline-none focus:border-purple-500/50 transition-all cursor-pointer text-sm"
+                            >
+                                <option value="all" class="bg-[#0a0a16]">Барлық деңгейлер</option>
+                                <option value="Beginner" class="bg-[#0a0a16]">Beginner</option>
+                                <option value="Intermediate" class="bg-[#0a0a16]">Intermediate</option>
+                                <option value="Advanced" class="bg-[#0a0a16]">Advanced</option>
+                            </select>
+                            <i data-lucide="chevron-down" class="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none"></i>
+                        </div>
+                    </div>
+
                 </div>
-
-                <div className="relative flex-1 md:w-48">
-                  <select 
-                    value={selectedLevel}
-                    onChange={(e) => setSelectedLevel(e.target.value)}
-                    className="w-full appearance-none px-4 py-3 bg-black/20 border border-white/5 rounded-xl text-slate-300 focus:outline-none focus:border-purple-500/50 transition-all cursor-pointer text-sm"
-                  >
-                    <option value="all" className="bg-[#0a0a16]">Барлық деңгейлер</option>
-                    <option value="Beginner" className="bg-[#0a0a16]">Beginner</option>
-                    <option value="Intermediate" className="bg-[#0a0a16]">Intermediate</option>
-                    <option value="Advanced" className="bg-[#0a0a16]">Advanced</option>
-                  </select>
-                  <ChevronDown className="absolute right-4 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400 pointer-events-none" />
-                </div>
-              </div>
-
             </div>
-          </div>
         </section>
 
-        {/* Courses Grid Section */}
-        <section className="px-6 py-8 pb-24">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex items-center justify-between mb-8">
-              <h2 className="text-2xl font-bold text-white flex items-center gap-3">
-                <span className="w-8 h-1 bg-gradient-to-r from-cyan-500 to-transparent rounded-full"></span>
-                Барлық Курстар ({filteredCourses.length})
-              </h2>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-              {filteredCourses.map(course => (
-                <div 
-                  key={course.id}
-                  className="group relative flex flex-col bg-[#0a0a16]/60 backdrop-blur-sm border border-white/5 rounded-3xl overflow-hidden hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)] hover:border-cyan-500/30"
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a16] to-transparent z-10"></div>
-                    <img 
-                      src={course.image} 
-                      alt={course.title} 
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70 group-hover:opacity-100" 
-                    />
-                    <div className="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-xs font-semibold text-cyan-400">
-                      {course.category}
-                    </div>
-                  </div>
-                  <div className="flex flex-col flex-1 p-6 relative z-20 -mt-6">
-                    <h3 className="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
-                      {course.title}
-                    </h3>
-                    <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 mb-6">
-                      <div className="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-md">
-                        <BarChart2 className="w-3.5 h-3.5 text-purple-400" />
-                        {course.level}
-                      </div>
-                      <div className="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-md">
-                        <Clock className="w-3.5 h-3.5 text-blue-400" />
-                        {course.duration}
-                      </div>
-                      <div className="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-md text-amber-400">
-                        <Star className="w-3.5 h-3.5 fill-current" />
-                        {course.rating}
-                      </div>
-                    </div>
-                    <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
-                      <span className="text-lg font-bold text-white">{course.price}</span>
-                      <button 
-                        onClick={() => handleEnroll(course.title)}
-                        className="px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-sm font-semibold transition-all shadow-lg shadow-cyan-500/25 cursor-pointer"
-                      >
-                        Толығырақ
-                      </button>
-                    </div>
-                  </div>
+        <!-- Courses Grid Section -->
+        <section class="px-6 py-8 pb-24">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <h2 id="coursesCountTitle" class="text-2xl font-bold text-white flex items-center gap-3">
+                        <span class="w-8 h-1 bg-gradient-to-r from-cyan-500 to-transparent rounded-full"></span>
+                        Барлық Курстар (10)
+                    </h2>
                 </div>
-              ))}
+                
+                <div id="coursesGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                    <!-- Dynamic cards injected via JS -->
+                </div>
+
+                <div id="noResults" class="py-20 text-center text-slate-500 hidden flex flex-col items-center">
+                    <i data-lucide="search-x" class="w-12 h-12 mb-4 opacity-20"></i>
+                    <p>Іздеу нәтижесі бойынша ешқандай курс табылмады.</p>
+                </div>
             </div>
-
-            {filteredCourses.length === 0 && (
-              <div className="py-20 text-center text-slate-500 flex flex-col items-center">
-                <SearchX className="w-12 h-12 mb-4 opacity-20" />
-                <p>Іздеу нәтижесі бойынша ешқандай курс табылмады.</p>
-              </div>
-            )}
-          </div>
         </section>
-
-      </div>
     </div>
-  );
-}
+
+    <!-- JavaScript Logic -->
+    <script>
+        const courses = [
+            {
+                id: 1,
+                title: "Python Негіздері: Практика + Жобалар",
+                category: "Programming",
+                level: "Beginner",
+                duration: "24 сағ",
+                rating: 4.8,
+                price: "29,990 ₸",
+                image: "https://images.unsplash.com/photo-1526379095098-d400fd0bf935?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 2,
+                title: "UI/UX Design: Figma & Case Study",
+                category: "Design",
+                level: "Beginner",
+                duration: "30 сағ",
+                rating: 4.7,
+                price: "39,990 ₸",
+                image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 3,
+                title: "Machine Learning: Scikit-learn Практикум",
+                category: "AI",
+                level: "Intermediate",
+                duration: "42 сағ",
+                rating: 4.9,
+                price: "69,990 ₸",
+                image: "https://images.unsplash.com/photo-1555255707-c07966088b7b?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 4,
+                title: "Full-Stack Web: HTML/CSS/JS + API",
+                category: "Web",
+                level: "Intermediate",
+                duration: "38 сағ",
+                rating: 4.6,
+                price: "49,990 ₸",
+                image: "https://images.unsplash.com/photo-1627398240309-089a14426d82?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 5,
+                title: "Advanced SQL: JOIN & Window Functions",
+                category: "AI",
+                level: "Advanced",
+                duration: "28 сағ",
+                rating: 4.8,
+                price: "58,990 ₸",
+                image: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 6,
+                title: "Cloud Architecture & AWS Essentials",
+                category: "Cloud",
+                level: "Advanced",
+                duration: "45 сағ",
+                rating: 4.9,
+                price: "79,990 ₸",
+                image: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 7,
+                title: "Cybersecurity: Ethical Hacking негіздері",
+                category: "Cloud",
+                level: "Intermediate",
+                duration: "35 сағ",
+                rating: 4.7,
+                price: "54,990 ₸",
+                image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 8,
+                title: "DevOps Engineering & Docker/Kubernetes",
+                category: "Cloud",
+                level: "Advanced",
+                duration: "40 сағ",
+                rating: 4.8,
+                price: "64,990 ₸",
+                image: "https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 9,
+                title: "Blockchain & Smart Contracts Development",
+                category: "Programming",
+                level: "Beginner",
+                duration: "20 сағ",
+                rating: 4.5,
+                price: "34,990 ₸",
+                image: "https://images.unsplash.com/photo-1639762681485-074b7f938ba0?auto=format&fit=crop&w=600&q=80"
+            },
+            {
+                id: 10,
+                title: "Data Science & Python Pandas Analytics",
+                category: "AI",
+                level: "Intermediate",
+                duration: "50 сағ",
+                rating: 4.9,
+                price: "74,990 ₸",
+                image: "https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?auto=format&fit=crop&w=600&q=80"
+            }
+        ];
+
+        const searchInput = document.getElementById('searchInput');
+        const categoryFilter = document.getElementById('categoryFilter');
+        const levelFilter = document.getElementById('levelFilter');
+        const coursesGrid = document.getElementById('coursesGrid');
+        const coursesCountTitle = document.getElementById('coursesCountTitle');
+        const noResults = document.getElementById('noResults');
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+
+        function renderCourses(list) {
+            coursesGrid.innerHTML = '';
+            coursesCountTitle.innerHTML = `<span class="w-8 h-1 bg-gradient-to-r from-cyan-500 to-transparent rounded-full"></span> Барлық Курстар (${list.length})`;
+
+            if (list.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            list.forEach(course => {
+                const card = document.createElement('div');
+                card.className = "group relative flex flex-col bg-[#0a0a16]/60 backdrop-blur-sm border border-white/5 rounded-3xl overflow-hidden hover:-translate-y-2 transition-all duration-300 hover:shadow-[0_10px_30px_rgba(6,182,212,0.15)] hover:border-cyan-500/30";
+                card.innerHTML = `
+                    <div class="relative h-48 overflow-hidden">
+                        <div class="absolute inset-0 bg-gradient-to-t from-[#0a0a16] to-transparent z-10"></div>
+                        <img src="${course.image}" alt="${course.title}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-70 group-hover:opacity-100" />
+                        <div class="absolute top-4 right-4 z-20 px-3 py-1 rounded-full bg-black/50 backdrop-blur-md border border-white/10 text-xs font-semibold text-cyan-400">
+                            ${course.category}
+                        </div>
+                    </div>
+                    <div class="flex flex-col flex-1 p-6 relative z-20 -mt-6">
+                        <h3 class="text-xl font-bold text-white mb-3 group-hover:text-cyan-400 transition-colors">
+                            ${course.title}
+                        </h3>
+                        <div class="flex flex-wrap items-center gap-3 text-xs text-slate-400 mb-6">
+                            <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-md">
+                                <i data-lucide="bar-chart-2" class="w-3.5 h-3.5 text-purple-400"></i>
+                                ${course.level}
+                            </div>
+                            <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-md">
+                                <i data-lucide="clock" class="w-3.5 h-3.5 text-blue-400"></i>
+                                ${course.duration}
+                            </div>
+                            <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-md text-amber-400">
+                                <i data-lucide="star" class="w-3.5 h-3.5 fill-current"></i>
+                                ${course.rating}
+                            </div>
+                        </div>
+                        <div class="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
+                            <span class="text-lg font-bold text-white">${course.price}</span>
+                            <button onclick="enrollCourse('${course.title}')" class="px-5 py-2 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white text-sm font-semibold transition-all shadow-lg shadow-cyan-500/25 cursor-pointer">
+                                Толығырақ
+                            </button>
+                        </div>
+                    </div>
+                `;
+                coursesGrid.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        function filterCourses() {
+            const query = searchInput.value.toLowerCase();
+            const cat = categoryFilter.value;
+            const lvl = levelFilter.value;
+
+            const filtered = courses.filter(course => {
+                const matchesSearch = course.title.toLowerCase().includes(query);
+                const matchesCat = cat === 'all' || course.category === cat;
+                const matchesLvl = lvl === 'all' || course.level === lvl;
+                return matchesSearch && matchesCat && matchesLvl;
+            });
+
+            renderCourses(filtered);
+        }
+
+        function enrollCourse(title) {
+            toastText.textContent = `"${title}" курсқа сәтті өтінім жіберілді!`;
+            toast.classList.remove('hidden');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+            }, 4000);
+        }
+
+        searchInput.addEventListener('input', filterCourses);
+        categoryFilter.addEventListener('change', filterCourses);
+        levelFilter.addEventListener('change', filterCourses);
+
+        // Initial render & icons load
+        renderCourses(courses);
+        lucide.createIcons();
+    </script>
+</body>
+</html>
